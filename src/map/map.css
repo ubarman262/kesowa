@@ -1,0 +1,56 @@
+.map-container {
+    background-color: blue;
+}
+
+.menu-container {
+    background-color: #3d3d3d;
+    padding: 20px 15px 0px 15px;
+    height: 100vh;
+}
+
+.searchbar-container {
+    padding: 5px;
+}
+
+.ant-input {
+    border: 1px solid #555555 !important;
+    background: #424242 !important;
+    border-radius: 5px !important;
+    height: 40px;
+}
+
+.button-container {
+    padding: 0px 3px;
+}
+
+.ant-btn {
+    background-color: #05b4ff !important;
+    border-radius: 5px !important;
+    padding: 0px 18px !important;
+    height: 40px;
+    font-size: 15px;
+}
+
+.ant-btn:hover {
+    background-color: #13aaeb !important;
+}
+
+.info-container {
+    background: rgba(9, 9, 9, 255);
+    width: 98%;
+    height: 80vh;
+    margin: 10px 5px;
+    border-radius: 10px;
+    padding: 25px;
+}
+
+.info-table-header {
+    color: white;
+    font-size: 15px;
+}
+
+.info-table-data {
+    color: #434343;
+    padding: 0px 25px;
+    font-size: 15px;
+}
