@@ -1,13 +1,12 @@
 import { StaticMap } from "react-map-gl";
 import { LineLayer } from "@deck.gl/layers";
 import DeckGL from "deck.gl";
-
 const MAP_STYLE = "mapbox://styles/mapbox/streets-v11";
 
 const INITIAL_VIEW_STATE = {
-  longitude: 24.996605,
-  latitude: 54.999147,
-  zoom: 13,
+  longitude: 54.99851063608017,
+  latitude: 24.98970986396195,
+  zoom: 12,
   pitch: 0,
   bearing: 0,
 };
