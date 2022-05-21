@@ -1,11 +1,12 @@
 import { Component } from "react";
 import { Row, Col, Input, Button } from "antd";
 
-import "./map.css";
+import "./home.css";
+import Map from "./map/map";
 
 const style = { padding: "10px 0", textAlign: "center" };
 
-export default class Map extends Component {
+export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,7 +21,7 @@ export default class Map extends Component {
     return (
       <Row>
         <Col className="map-container" span={19}>
-          col-12
+          <Map />
         </Col>
         <Col className="menu-container" span={5}>
           <div className="searchbar-container">
