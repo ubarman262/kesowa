@@ -16,20 +16,10 @@ export default class Home extends Component {
       coordinateY: 0,
       zoom: 12,
       listVisible: true,
+      drawMode: false,
       geojson: {
         type: "FeatureCollection",
-        features: [
-          {
-            type: "Feature",
-            geometry: {
-              type: "Point",
-              coordinates: [125.6, 10.1],
-            },
-            properties: {
-              name: "Dinagat Islands",
-            },
-          },
-        ],
+        features: [],
       },
     };
   }
@@ -90,7 +80,37 @@ export default class Home extends Component {
 
   updateGeoJson = (geojson) => {
     this.setState({
-      geojson: geojson,
+      geojson: {
+        type: "FeatureCollection",
+        features: geojson.features,
+      },
+    });
+  };
+
+  saveShape = () => {
+    const coordinates = {
+      coordinateX: this.state.coordinateX,
+      coordinateY: this.state.coordinateY,
+      zoom: this.state.zoom,
+    };
+    localStorage.setItem("geojsonObj", JSON.stringify(this.state.geojson));
+    localStorage.setItem("geocoordinates", JSON.stringify(coordinates));
+  };
+
+  fetchShape = () => {
+    const localGeojson = localStorage.getItem("geojsonObj");
+    const geocoordinates = JSON.parse(localStorage.getItem("geocoordinates"));
+    this.setState({
+      geojson: JSON.parse(localGeojson),
+      coordinateX: geocoordinates.coordinateX,
+      coordinateY: geocoordinates.coordinateY,
+      zoom: geocoordinates.zoom,
+    });
+  };
+
+  drawShape = () => {
+    this.setState({
+      drawMode: !this.state.drawMode,
     });
   };
 
@@ -105,12 +125,18 @@ export default class Home extends Component {
           zoom={this.state.zoom}
           geojson={this.state.geojson}
           updateGeoJson={this.updateGeoJson.bind(this)}
+          setCoordinates={this.setCoordinates.bind(this)}
+          drawMode={this.state.drawMode}
         />
         <Sidenav
           data={this.state.searchList}
           autoCompletehandler={this.autoCompletehandler.bind(this)}
           setCoordinates={this.setCoordinates.bind(this)}
           listVisible={this.state.listVisible}
+          drawShape={this.drawShape.bind(this)}
+          saveShape={this.saveShape.bind(this)}
+          fetchShape={this.fetchShape.bind(this)}
+          drawMode={this.state.drawMode}
         />
       </>
     );

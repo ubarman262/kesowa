@@ -6,6 +6,15 @@ export default function Sidenav(props) {
   const locationSelectHandler = (place) => {
     props.setCoordinates(place.coordinates[0], place.coordinates[1], place.zoom);
   };
+  const fetchShape = () => {
+    props.fetchShape();
+  };
+  const saveShape = () => {
+    props.saveShape();
+  };
+  const drawShape = () => {
+    props.drawShape();
+  };
   return (
     <div className="sidenav">
       <div className="dropdown">
@@ -22,24 +31,28 @@ export default function Sidenav(props) {
           dataSource={props.data}
           renderItem={(place) => (
             <List.Item>
-              <List.Item.Meta title={place.name} description={place.context} onClick={() => locationSelectHandler(place)} />
+              <List.Item.Meta
+                title={place.name}
+                description={place.context}
+                onClick={() => locationSelectHandler(place)}
+              />
             </List.Item>
           )}
         />
       </div>
       <div className="button-container">
         <div>
-          <Button className="button" type="primary">
-            Draw Shape
+          <Button className="button" type="primary" onClick={drawShape}>
+            {props.drawMode ? "End Drawing" : "Draw Shape"}
           </Button>
         </div>
         <div>
-          <Button className="button" type="primary">
+          <Button className="button" type="primary" onClick={saveShape}>
             Save Shape
           </Button>
         </div>
         <div>
-          <Button className="button" type="primary">
+          <Button className="button" type="primary" onClick={fetchShape}>
             Fetch Shape
           </Button>
         </div>
