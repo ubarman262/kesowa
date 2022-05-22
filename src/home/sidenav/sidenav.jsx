@@ -58,19 +58,23 @@ export default function Sidenav(props) {
         </div>
       </div>
       <div className="info-container">
-        <table className="info-table">
-          <thead></thead>
-          <tbody>
-            <tr>
-              <td className="info-table-header">Area</td>
-              <td className="info-table-data">{props.area} Sq. m</td>
-            </tr>
-            <tr>
-              <td className="info-table-header">Perimeter</td>
-              <td className="info-table-data">{props.perimeter} m</td>
-            </tr>
-          </tbody>
-        </table>
+        {props.area > 0 ? (
+          <table className="info-table">
+            <thead></thead>
+            <tbody>
+              <tr>
+                <td className="info-table-header">Area</td>
+                <td className="info-table-data">{props.area} Sq. m</td>
+              </tr>
+              <tr>
+                <td className="info-table-header">Perimeter</td>
+                <td className="info-table-data">{props.perimeter} m</td>
+              </tr>
+            </tbody>
+          </table>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

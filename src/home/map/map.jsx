@@ -36,12 +36,7 @@ export default function Map(props) {
       controller={true}
       layers={[layer]}
       onViewStateChange={(viewState) => {
-        const coordinates = {
-          longitude: viewState.viewState.longitude,
-          latitude: viewState.viewState.latitude,
-          zoom: viewState.viewState.zoom,
-        };
-        props.setCoordinates(coordinates.longitude, coordinates.latitude, coordinates.zoom);
+        props.setCoordinates(viewState.viewState.longitude, viewState.viewState.latitude, viewState.viewState.zoom);
       }}
     >
       <StaticMap mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN} mapStyle={MAP_STYLE} />

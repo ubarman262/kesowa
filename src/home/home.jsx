@@ -1,16 +1,17 @@
 import { Component } from "react";
 import { autosearch } from "../services/http.service";
-
-import "./home.css";
+import * as turf from "@turf/turf";
 import Map from "./map/map";
 import Sidenav from "./sidenav/sidenav";
+
+import "./home.css";
 
 export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      area: 144,
-      perimeter: 100,
+      area: 0,
+      perimeter: 0,
       searchList: [],
       coordinateX: 0,
       coordinateY: 0,
@@ -98,14 +99,23 @@ export default class Home extends Component {
   };
 
   fetchShape = () => {
-    const localGeojson = localStorage.getItem("geojsonObj");
-    const geocoordinates = JSON.parse(localStorage.getItem("geocoordinates"));
-    this.setState({
-      geojson: JSON.parse(localGeojson),
-      coordinateX: geocoordinates.coordinateX,
-      coordinateY: geocoordinates.coordinateY,
-      zoom: geocoordinates.zoom,
-    });
+    if (localStorage.getItem("geojsonObj")) {
+      const localGeojson = localStorage.getItem("geojsonObj");
+      const geocoordinates = JSON.parse(localStorage.getItem("geocoordinates"));
+      const points = [...JSON.parse(localGeojson).features[0].geometry.coordinates[0]];
+      var polygon = turf.polygon([[...points]]);
+      var area = turf.area(polygon);
+      var line = turf.lineString([...points]);
+      var length = turf.length(line, { units: "kilometers" });
+      this.setState({
+        geojson: JSON.parse(localGeojson),
+        coordinateX: geocoordinates.coordinateX,
+        coordinateY: geocoordinates.coordinateY,
+        zoom: geocoordinates.zoom,
+        area: area,
+        perimeter: length * 1000,
+      });
+    }
   };
 
   drawShape = () => {
@@ -129,13 +139,17 @@ export default class Home extends Component {
           drawMode={this.state.drawMode}
         />
         <Sidenav
+          area={this.state.area}
+          perimeter={this.state.perimeter}
           data={this.state.searchList}
           autoCompletehandler={this.autoCompletehandler.bind(this)}
           setCoordinates={this.setCoordinates.bind(this)}
           listVisible={this.state.listVisible}
           drawShape={this.drawShape.bind(this)}
           saveShape={this.saveShape.bind(this)}
-          fetchShape={this.fetchShape.bind(this)}
+          fetchShape={() => {
+            this.fetchShape();
+          }}
           drawMode={this.state.drawMode}
         />
       </>
