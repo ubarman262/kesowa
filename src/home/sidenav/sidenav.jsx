@@ -21,6 +21,9 @@ export default function Sidenav(props) {
         <Input
           allowClear={true}
           placeholder="Search location..."
+          onFocus={(value) => {
+            props.autoCompletehandler(value);
+          }}
           onChange={(value) => {
             props.autoCompletehandler(value);
           }}

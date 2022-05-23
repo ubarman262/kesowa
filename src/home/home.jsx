@@ -3,6 +3,7 @@ import { autosearch } from "../services/http.service";
 import * as turf from "@turf/turf";
 import Map from "./map/map";
 import Sidenav from "./sidenav/sidenav";
+import { notification } from "antd";
 
 import "./home.css";
 
@@ -24,6 +25,13 @@ export default class Home extends Component {
       },
     };
   }
+
+  openNotificationWithIcon = (type, title, description) => {
+    notification[type]({
+      message: title,
+      description: description,
+    });
+  };
 
   autoCompletehandler(string) {
     autosearch(string).then((results) => {
@@ -96,6 +104,7 @@ export default class Home extends Component {
     };
     localStorage.setItem("geojsonObj", JSON.stringify(this.state.geojson));
     localStorage.setItem("geocoordinates", JSON.stringify(coordinates));
+    this.openNotificationWithIcon("success", "Shaped Saved", "Shape was saved to localStorage");
   };
 
   fetchShape = () => {
@@ -115,6 +124,7 @@ export default class Home extends Component {
         area: area,
         perimeter: length * 1000,
       });
+      this.openNotificationWithIcon("success", "Shaped Fetched", "Shape was fetched from localStorage");
     }
   };
 
